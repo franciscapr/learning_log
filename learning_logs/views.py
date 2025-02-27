@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Topic
+from .models import Topic, Entry
 from .forms import TopicForm, EntryForm
 
 # Create your views here.
@@ -60,4 +60,23 @@ def new_entry(request, topic_id):
     # Muestra un formulario en blanco o no vàlido.
     context = {'topic': topic, 'form': form}
     return render(request, 'learning_logs/new_entry.html', context)
+
+
+
+def edit_entry(request, entry_id):
+    """Edita una entrada existente."""
+    entry = Entry.objects.get(id=entry_id)
+    topic = entry.topic
+
+    if request.method != 'POST':
+        # Solicitud inicial; prerrellena el formulario con la entrada actual.
+        form = EntryForm(instance=entry)
+    else:
+        # Datos POST enviados; procesa datos.
+        form = EntryForm(instance=entry, data=request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('learning_logs:topic', topic_id=topic.id)
         
+    context = {'entry': entry, 'topic': topic, 'form': form}
+    return render(request, 'learning_logs/edit_entry.html', context)
