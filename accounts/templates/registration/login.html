@@ -7,7 +7,7 @@
 
 {% endif %}
 
-<form action="{% url 'user:login' %}" method="post">
+<form action="{% url 'accounts:login' %}" method="post">
     {% csrf_token %}
     {{ form_as_div }}
     <button name="submit">Log in</button>
