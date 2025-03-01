@@ -13,9 +13,11 @@ def index(request):
 @login_required    # Comprueba se un usuario a iniciado sesiòn
 def topics(request):
     """Muestra todos los temas."""
-    topics = Topic.objects.order_by('date_added')
+    topics = Topic.objects.filter(owner=request.user).order_by('date_added')
     context = {'topics': topics}
     return render(request, 'learning_logs/topics.html', context)
+
+
 
 @login_required
 def topic(request, topic_id):
