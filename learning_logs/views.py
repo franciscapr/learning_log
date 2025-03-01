@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import Topic, Entry
 from .forms import TopicForm, EntryForm
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def index(request):
@@ -9,7 +10,7 @@ def index(request):
 
 
 # La vista de topics
-
+@login_required    # Comprueba se un usuario a iniciado sesiòn
 def topics(request):
     """Muestra todos los temas."""
     topics = Topic.objects.order_by('date_added')

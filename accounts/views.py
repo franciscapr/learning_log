@@ -20,3 +20,4 @@ def register(request):
     # Muestra una formulario en blanco o no vàlido.
     context = {'form': form}
     return render(request, 'registration/register.html', context)
+
