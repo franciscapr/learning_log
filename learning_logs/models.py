@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -6,6 +7,7 @@ class Topic(models.Model):
     """Un tema sobre el que està aprendiendo el usuario."""
     text = models.CharField(max_length=200)
     date_added = models.DateTimeField(auto_now_add=True)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)    # Clave foranea con el modelo de user
 
     def __str__(self):
         """Devuelve una representaciòn del modelo como cadena."""
