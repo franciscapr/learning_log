@@ -17,7 +17,7 @@ def topics(request):
     context = {'topics': topics}
     return render(request, 'learning_logs/topics.html', context)
 
-
+@login_required
 def topic(request, topic_id):
     """Muestra todos los temas y todas sus entradas."""
     topic = Topic.objects.get(id=topic_id)
@@ -25,6 +25,7 @@ def topic(request, topic_id):
     context = {'topic': topic, 'entries': entries}
     return render(request, 'learning_logs/topic.html', context)
 
+@login_required
 def new_topic(request):
     """Añade una tema nuevo."""
     if request.method != 'POST':
@@ -41,7 +42,7 @@ def new_topic(request):
     context = {'form': form}
     return render(request, 'learning_logs/new_topic.html', context)
 
-
+@login_required
 def new_entry(request, topic_id):
     """Añade una entrada nueva para un tema en particular."""
     topic = Topic.objects.get(id=topic_id)
@@ -63,7 +64,7 @@ def new_entry(request, topic_id):
     return render(request, 'learning_logs/new_entry.html', context)
 
 
-
+@login_required
 def edit_entry(request, entry_id):
     """Edita una entrada existente."""
     entry = Entry.objects.get(id=entry_id)
