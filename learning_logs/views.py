@@ -45,12 +45,16 @@ def new_topic(request):
         # Datos POST enviados; procesa datos.
         form = TopicForm(data=request.POST)
         if form.is_valid():
-            form.save()
+            new_topic = form.save(commit=False)
+            new_topic.owner = request.user
+            new_topic.save()
             return redirect('learning_logs:topics')
         
     # Muestra un formulario en blanco o no vàlido.
     context = {'form': form}
     return render(request, 'learning_logs/new_topic.html', context)
+
+
 
 
 @login_required
@@ -75,11 +79,16 @@ def new_entry(request, topic_id):
     return render(request, 'learning_logs/new_entry.html', context)
 
 
+
+
 @login_required
 def edit_entry(request, entry_id):
     """Edita una entrada existente."""
     entry = Entry.objects.get(id=entry_id)
     topic = entry.topic
+
+    if topic.owner != request.user:
+        raise Http404
 
     if request.method != 'POST':
         # Solicitud inicial; prerrellena el formulario con la entrada actual.
