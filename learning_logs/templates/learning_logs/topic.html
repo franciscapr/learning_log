@@ -1,31 +1,27 @@
 {% extends 'learning_logs/base.html' %}
 
-{% block content %}
+{% block page_header %}
+<h2>{{ topic.text }}</h2>
 
-<p>Topic: {{ topic }}</p>
-<p>Entries: </p>
+{% endblock page_header %}
+
+{% block content %}
 <p>
     <a href="{% url 'learning_logs:new_entry' topic.id %}">Add new entry</a>
 </p>
 
+{% for entry in entries %}
+<div class="card mb-3">
+    <!-- Card header with timestamp and edit link -->
+     <h4 class="card-header">
 
-<ul>
-    {% for entry in entries %}
-    <li>
-        <p>
-            {{ entry.date_added|date:'M d, Y H:i' }}
-        </p>
-        <p>
-            {{ entry.text|linebreaks }}
-        </p>
-        <p>
-            <a href="{% url 'learning_logs:edit_entry' entry.id %}">
-                Edit entry
-            </a>
-        </p>
-    </li>
+         {{ entry.date_added|date_'M d, Y H:i' }}
+         <small><a href="{% url 'learning_logs:edit_entry' entry.id %}">edit entry</a></small>
+        </h4>
+        <!-- Cuerpo de la tarheta con texto -->
+         <div class="card-body">{{ entry.text|linebreaks }}</div>
+    </div>
     {% empty %}
-    <li>There are no entried for this topic yet.</li>
+    <p>There are no entried for thid topic yet.</p>
     {% endfor %}
-</ul>
-{% endblock content %}
+    {% endblock content %}
