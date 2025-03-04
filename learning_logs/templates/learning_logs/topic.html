@@ -15,7 +15,7 @@
     <!-- Card header with timestamp and edit link -->
      <h4 class="card-header">
 
-         {{ entry.date_added|date_'M d, Y H:i' }}
+         {{ entry.date_added|date:'M d, Y H:i' }}
          <small><a href="{% url 'learning_logs:edit_entry' entry.id %}">edit entry</a></small>
         </h4>
         <!-- Cuerpo de la tarheta con texto -->
